@@ -10,6 +10,68 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
+      /* Splash Screen ka poora background aur center alignment */
+#splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #0f0f12; /* Ekdam dark cyber look background */
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999; /* Taaki ye sabse upar dikhe */
+    transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+}
+
+/* Text style aur animation */
+.splash-content {
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.splash-content h1 {
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Ek chota sa stylish loading bar niche */
+.loader {
+    width: 150px;
+    height: 4px;
+    background-color: #333;
+    margin: 0 auto;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+}
+
+.loader::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    background-color: #00ffcc; /* Neon green/cyan touch */
+    animation: loading 1.5s infinite ease-in-out;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(-10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes loading {
+    0% { left: -50%; }
+    100% { left: 100%; }
+}
+        
         *{margin:0;padding:0;box-sizing:border-box;}
         html{scroll-behavior:smooth;}
         body{
@@ -237,6 +299,14 @@
     </style>
 </head>
 <body>
+    <!-- Splash Screen Area -->
+<div id="splash-screen">
+    <div class="splash-content">
+        <h1>Made by Shivansh Goswami</h1>
+        <div class="loader"></div>
+    </div>
+</div>
+    
   <!-- PARTICLES -->
 <div id="divine-particles"></div>
 <div class="aura-overlay"></div>
@@ -687,7 +757,25 @@ window.addEventListener('scroll', () => {
     });
 });
 </script>
-
+<script>
+    // Jaise hi page load hoga, timer shuru ho jayega
+    window.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            const splash = document.getElementById('splash-screen');
+            
+            // Fade out effect ke liye opacity 0 karenge
+            splash.style.opacity = '0';
+            splash.style.visibility = 'hidden';
+            
+            // 500ms baad screen ko complete remove kar denge taaki peeche ka click kaam kare
+            setTimeout(() => {
+                splash.remove();
+            }, 500);
+            
+        }, 5000); // 5000 milliseconds = 5 Seconds
+    });
+</script>
+    
 </body>
 </html>
   
